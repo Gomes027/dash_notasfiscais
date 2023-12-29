@@ -31,10 +31,11 @@ def concatenar_com_quebras_de_linha(lista_nfs, max_chars=40):
     resultado += linha_atual.rstrip(", ")
     return resultado
 
-df_agrupado = df_recebimento.groupby(['FORNECEDOR', 'WMS', 'Loja']).agg({'NÚMERO DA NF': lambda x: concatenar_com_quebras_de_linha(x)}).reset_index()
-
 # Filtragem dos dados para a loja selecionada e WMS 'L'
-df_filtrado = df_agrupado[(df_agrupado['WMS'] == 'L') & (df_agrupado['Loja'] == loja_selecionada)].sort_values('FORNECEDOR')
+df_filtrado_para_agrupamento = df_recebimento[(df_recebimento['WMS'] == 'L') & (df_recebimento['Loja'] == loja_selecionada)]
+
+# Agrupar por fornecedor no DataFrame filtrado
+df_agrupado = df_filtrado_para_agrupamento.groupby('FORNECEDOR').agg({'NÚMERO DA NF': lambda x: concatenar_com_quebras_de_linha(x)}).reset_index()
 
 # Filtragem dos dados para a loja selecionada no df_nfs_recebidas
 df_nfs_recebidas_filtrado = df_nfs_recebidas[df_nfs_recebidas['Loja'] == loja_selecionada].sort_values('FORNECEDOR')
@@ -64,7 +65,7 @@ def dividir_em_grupos(lista, tamanho_grupo):
         yield lista[i:i + tamanho_grupo]
 
 # Preparação dos dados para "ENTREGAS LIBERADAS"
-dados_fornecedores = df_filtrado.groupby('FORNECEDOR')['NÚMERO DA NF'].apply(lambda x: "<br>".join(x)).reset_index()
+dados_fornecedores = df_agrupado.groupby('FORNECEDOR')['NÚMERO DA NF'].apply(lambda x: "<br>".join(x)).reset_index()
 grupos_fornecedores = list(dividir_em_grupos(dados_fornecedores, 10))
 
 # Exibição dos DataFrames lado a lado
