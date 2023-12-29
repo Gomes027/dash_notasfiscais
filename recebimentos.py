@@ -4,7 +4,7 @@ import streamlit as st
 from time import sleep
 
 # Substitua pelo seu token de acesso pessoal do GitHub
-GITHUB_TOKEN = 'seu_token_aqui'
+GITHUB_TOKEN = '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'
 
 # URL do arquivo no GitHub (ajuste conforme necessário)
 GITHUB_FILE_URL = 'https://api.github.com/repos/seu_usuario/seu_repositorio/contents/caminho_para_seu_arquivo.xlsx'
