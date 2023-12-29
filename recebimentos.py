@@ -1,6 +1,26 @@
+import os
 import pandas as pd
 import streamlit as st
 from time import sleep
+
+# Função para checar a última modificação do arquivo
+def check_file_update(file_path, last_mod_time):
+    current_mod_time = os.stat(file_path).st_mtime
+    return current_mod_time != last_mod_time, current_mod_time
+
+# Inicializar as últimas vezes de modificação
+last_mod_time_recebimento = os.stat("recebimento_do_dia.xlsx").st_mtime
+last_mod_time_nfs_recebidas = os.stat("nfs_recebidas.xlsx").st_mtime
+
+while True:
+    # Verificar atualizações nos arquivos
+    updated_recebimento, last_mod_time_recebimento = check_file_update("recebimento_do_dia.xlsx", last_mod_time_recebimento)
+    updated_nfs_recebidas, last_mod_time_nfs_recebidas = check_file_update("nfs_recebidas.xlsx", last_mod_time_nfs_recebidas)
+
+    if updated_recebimento or updated_nfs_recebidas:
+        st.rerun()
+
+    sleep(10)  # Espera por 10 segundos antes de checar novamente
 
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Entregas Pendentes")
