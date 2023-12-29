@@ -66,7 +66,7 @@ def dividir_em_grupos(lista, tamanho_grupo):
 
 # Preparação dos dados para "ENTREGAS LIBERADAS"
 dados_fornecedores = df_agrupado.groupby('FORNECEDOR')['NÚMERO DA NF'].apply(lambda x: "<br>".join(x)).reset_index()
-grupos_fornecedores = list(dividir_em_grupos(dados_fornecedores, 10))
+grupos_fornecedores = list(dividir_em_grupos(dados_fornecedores, 8))
 
 # Exibição dos DataFrames lado a lado
 col1, col2 = st.columns([4, 6])
