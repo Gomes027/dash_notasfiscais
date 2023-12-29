@@ -1,14 +1,5 @@
-import time
-import requests
 import pandas as pd
 import streamlit as st
-from io import BytesIO
-
-def baixar_e_ler_excel(url):
-    """ Baixa e lê um arquivo Excel do GitHub. """
-    response = requests.get(url)
-    file = BytesIO(response.content)
-    return pd.read_excel(file, engine='openpyxl')
 
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Entregas Pendentes")
@@ -45,6 +36,3 @@ with col2:
     st.subheader("ENTREGAS LIBERADAS")
     colunas_relatorio = ['FORNECEDOR', 'NÚMERO DA NF']
     st.dataframe(df_filtrado[colunas_relatorio], use_container_width=True, hide_index=True, height=700)
-
-if st.sidebar.button('Atualizar Dados'):
-    st.experimental_rerun()
