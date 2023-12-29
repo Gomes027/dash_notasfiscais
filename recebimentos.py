@@ -7,7 +7,7 @@ from time import sleep
 GITHUB_TOKEN = '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'
 
 # URL do arquivo no GitHub (ajuste conforme necessário)
-GITHUB_FILE_URL = 'https://api.github.com/repos/[NOME_DO_USUARIO]/[NOME_DO_REPOSITORIO]/contents/[CAMINHO_DO_ARQUIVO]'
+GITHUB_FILE_URL = 'https://api.github.com/repos/Gomes027/dash_notasfiscais/contents/recebimento_do_dia.xlsx'
 
 headers = {'Authorization': f'token {GITHUB_TOKEN}'}
 
