@@ -1,6 +1,43 @@
+import requests
 import pandas as pd
 import streamlit as st
 from time import sleep
+
+# Substitua pelo seu token de acesso pessoal do GitHub
+GITHUB_TOKEN = 'seu_token_aqui'
+
+# URL do arquivo no GitHub (ajuste conforme necessário)
+GITHUB_FILE_URL = 'https://api.github.com/repos/seu_usuario/seu_repositorio/contents/caminho_para_seu_arquivo.xlsx'
+
+headers = {'Authorization': f'token {GITHUB_TOKEN}'}
+
+def check_github_file_update(last_sha):
+    response = requests.get(GITHUB_FILE_URL, headers=headers)
+    if response.status_code == 200:
+        current_sha = response.json()['sha']
+        return current_sha != last_sha, current_sha
+    return False, last_sha
+
+def main():
+    # Configuração inicial da página
+    st.set_page_config(layout="wide", page_title="Entregas Pendentes")
+
+    # Inicializar a última SHA do arquivo
+    last_sha = ''
+
+    while True:
+        updated, last_sha = check_github_file_update(last_sha)
+
+        if updated:
+            break  # Sai do loop para recarregar a página
+
+        sleep(60)  # Espera 60 segundos antes de verificar novamente
+
+    # O resto do seu código Streamlit aqui...
+    # Por exemplo, carregar e exibir dados do arquivo atualizado
+
+if __name__ == "__main__":
+    main()
 
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Entregas Pendentes")
