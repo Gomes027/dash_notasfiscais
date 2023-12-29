@@ -17,7 +17,6 @@ df_recebimento = df_recebimento.rename(columns={'Fornecedor': 'FORNECEDOR', 'Not
 
 # Widget de seleção para escolher uma loja
 loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimento['Loja'].unique()))
-loja_selecionada = "VIX"
 
 # Função para concatenar com quebras de linha
 def concatenar_com_quebras_de_linha(lista_nfs, max_chars=50):
