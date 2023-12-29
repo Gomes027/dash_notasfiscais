@@ -24,8 +24,21 @@ df_filtrado = df_recebimento[(df_recebimento['WMS'] == 'L') & (df_recebimento['L
 # Filtragem dos dados para a loja selecionada no df_nfs_recebidas
 df_nfs_recebidas_filtrado = df_nfs_recebidas[df_nfs_recebidas['Loja'] == loja_selecionada].sort_values('FORNECEDOR')
 
-# Título da página com a loja selecionada
-st.title(f"RECEBIMENTO - {loja_selecionada}")
+# Dicionário mapeando lojas para suas respectivas imagens
+imagens_lojas = {
+    'SMJ': 'tresmann_Prancheta_1-removebg-preview.png',
+    'STT': 'tresmann_Prancheta_1-removebg-preview.png',
+    'VIX': 'Agoraa-removebg-preview.png',
+    'MCP': 'WhatsApp_Image_2023-10-17_at_18.58.15__2_-removebg-preview.png'
+}
+
+# Linha para adicionar título e imagem
+col_titulo, col_imagem = st.columns([8, 2])  # Ajuste as proporções conforme necessário
+with col_titulo:
+    st.title(f"RECEBIMENTO - {loja_selecionada}")
+with col_imagem:
+    # Exibe a imagem correspondente à loja selecionada
+    st.image(imagens_lojas[loja_selecionada], width=180)
 
 # Espaço usando HTML
 st.markdown("<br><br>", unsafe_allow_html=True)
