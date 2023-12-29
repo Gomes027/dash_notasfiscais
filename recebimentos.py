@@ -36,3 +36,6 @@ with col2:
     st.subheader("ENTREGAS LIBERADAS")
     colunas_relatorio = ['FORNECEDOR', 'NÚMERO DA NF']
     st.dataframe(df_filtrado[colunas_relatorio], use_container_width=True, hide_index=True, height=700)
+
+sleep(60)
+st.experimental_rerun()
