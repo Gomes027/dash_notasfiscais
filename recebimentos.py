@@ -17,6 +17,7 @@ df_recebimento = df_recebimento.rename(columns={'Fornecedor': 'FORNECEDOR', 'Not
 
 # Widget de seleção para escolher uma loja
 loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimento['Loja'].unique()))
+loja_selecionada = "VIX"
 
 # Função para concatenar com quebras de linha
 def concatenar_com_quebras_de_linha(lista_nfs, max_chars=40):
@@ -31,11 +32,11 @@ def concatenar_com_quebras_de_linha(lista_nfs, max_chars=40):
     resultado += linha_atual.rstrip(", ")
     return resultado
 
-# Filtragem dos dados para a loja selecionada e WMS 'L'
-df_filtrado_para_agrupamento = df_recebimento[(df_recebimento['WMS'] == 'L') & (df_recebimento['Loja'] == loja_selecionada)]
+# Filtragem dos dados para a loja selecionada
+df_filtrado = df_recebimento[(df_recebimento['WMS'] == 'L') & (df_recebimento['Loja'] == loja_selecionada)].sort_values('FORNECEDOR')
 
-# Agrupar por fornecedor no DataFrame filtrado
-df_agrupado = df_filtrado_para_agrupamento.groupby('FORNECEDOR').agg({'NÚMERO DA NF': lambda x: concatenar_com_quebras_de_linha(x)}).reset_index()
+# Agrupar por fornecedor e aplicar a função personalizada
+df_agrupado = df_filtrado.groupby('FORNECEDOR').agg({'NÚMERO DA NF': lambda x: concatenar_com_quebras_de_linha(x)}).reset_index()
 
 # Filtragem dos dados para a loja selecionada no df_nfs_recebidas
 df_nfs_recebidas_filtrado = df_nfs_recebidas[df_nfs_recebidas['Loja'] == loja_selecionada].sort_values('FORNECEDOR')
