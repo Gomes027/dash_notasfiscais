@@ -40,9 +40,6 @@ with col_imagem:
     # Exibe a imagem correspondente à loja selecionada
     st.image(imagens_lojas[loja_selecionada], width=180)
 
-# Espaço usando HTML
-st.markdown("<br><br>", unsafe_allow_html=True)
-
 # Exibição dos DataFrames lado a lado
 col1, col2 = st.columns(2)
 with col1:
