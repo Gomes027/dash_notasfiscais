@@ -20,7 +20,7 @@ loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimen
 loja_selecionada = "VIX"
 
 # Função para concatenar com quebras de linha
-def concatenar_com_quebras_de_linha(lista_nfs, max_chars=40):
+def concatenar_com_quebras_de_linha(lista_nfs, max_chars=50):
     resultado = ""
     linha_atual = ""
     for nf in lista_nfs:
