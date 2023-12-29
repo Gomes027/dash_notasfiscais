@@ -22,17 +22,6 @@ def main():
     # Configuração inicial da página
     st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 
-    # Inicializar a última SHA do arquivo
-    last_sha = ''
-
-    while True:
-        updated, last_sha = check_github_file_update(last_sha)
-
-        if updated:
-            break  # Sai do loop para recarregar a página
-
-        sleep(60)  # Espera 60 segundos antes de verificar novamente
-
     # Baixar e ler os arquivos Excel
     df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
     df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
@@ -114,6 +103,17 @@ def main():
                     for index, row in grupo.iterrows():
                         fornecedor, nfs = row
                         st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
+
+    # Inicializar a última SHA do arquivo
+    last_sha = ''
+
+    while True:
+        updated, last_sha = check_github_file_update(last_sha)
+
+        if updated:
+            break  # Sai do loop para recarregar a página
+
+        sleep(60)  # Espera 60 segundos antes de verificar novamente
 
 if __name__ == "__main__":
     main()
