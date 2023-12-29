@@ -18,8 +18,24 @@ df_recebimento = df_recebimento.rename(columns={'Fornecedor': 'FORNECEDOR', 'Not
 # Widget de seleção para escolher uma loja
 loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimento['Loja'].unique()))
 
+# Função para concatenar com quebras de linha
+def concatenar_com_quebras_de_linha(lista_nfs, max_chars=40):
+    resultado = ""
+    linha_atual = ""
+    for nf in lista_nfs:
+        if len(linha_atual) + len(nf) > max_chars:
+            resultado += linha_atual.rstrip(", ") + "<br>"
+            linha_atual = nf + ", "
+        else:
+            linha_atual += nf + ", "
+    resultado += linha_atual.rstrip(", ")
+    return resultado
+
+# Agrupar por fornecedor e aplicar a função personalizada
+df_agrupado = df_recebimento.groupby('FORNECEDOR').agg({'NÚMERO DA NF': lambda x: concatenar_com_quebras_de_linha(x)}).reset_index()
+
 # Filtragem dos dados para a loja selecionada
-df_filtrado = df_recebimento[(df_recebimento['WMS'] == 'L') & (df_recebimento['Loja'] == loja_selecionada)].sort_values('FORNECEDOR')
+df_filtrado = df_agrupado[(df_recebimento['WMS'] == 'L') & (df_recebimento['Loja'] == loja_selecionada)].sort_values('FORNECEDOR')
 
 # Filtragem dos dados para a loja selecionada no df_nfs_recebidas
 df_nfs_recebidas_filtrado = df_nfs_recebidas[df_nfs_recebidas['Loja'] == loja_selecionada].sort_values('FORNECEDOR')
@@ -40,16 +56,33 @@ with col_imagem:
     # Exibe a imagem correspondente à loja selecionada
     st.image(imagens_lojas[loja_selecionada], width=180)
 
+# Espaço usando HTML
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Função para dividir a lista em subconjuntos de tamanho específico
+def dividir_em_grupos(lista, tamanho_grupo):
+    for i in range(0, len(lista), tamanho_grupo):
+        yield lista[i:i + tamanho_grupo]
+
+# Preparação dos dados para "ENTREGAS LIBERADAS"
+dados_fornecedores = df_filtrado.groupby('FORNECEDOR')['NÚMERO DA NF'].apply(lambda x: "<br>".join(x)).reset_index()
+grupos_fornecedores = list(dividir_em_grupos(dados_fornecedores, 10))
+
 # Exibição dos DataFrames lado a lado
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([4, 6])
 with col1:
     st.subheader("NFS RECEBIDAS")
-    st.dataframe(df_nfs_recebidas_filtrado["FORNECEDOR"], use_container_width=True, hide_index=True, height=700)
+    fornecedores = df_nfs_recebidas_filtrado["FORNECEDOR"].unique()
+    st.markdown("<br>".join(f"**{fornecedor}**" for fornecedor in fornecedores), unsafe_allow_html=True)
 
 with col2:
     st.subheader("ENTREGAS LIBERADAS")
-    colunas_relatorio = ['FORNECEDOR', 'NÚMERO DA NF']
-    st.dataframe(df_filtrado[colunas_relatorio], use_container_width=True, hide_index=True, height=700)
-
-sleep(60)
-st.rerun()
+    if not dados_fornecedores.empty:
+        colunas_entregas = len(grupos_fornecedores)
+        cols = st.columns(colunas_entregas)
+        for i in range(colunas_entregas):
+            grupo = grupos_fornecedores[i]
+            with cols[i]:
+                for index, row in grupo.iterrows():
+                    fornecedor, nfs = row
+                    st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
