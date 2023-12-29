@@ -26,7 +26,9 @@ df_nfs_recebidas_filtrado = df_nfs_recebidas[df_nfs_recebidas['Loja'] == loja_se
 
 # Título da página com a loja selecionada
 st.title(f"RECEBIMENTO - {loja_selecionada}")
-st.write(""); st.write("")
+
+# Espaço usando HTML
+st.markdown("<br><br>", unsafe_allow_html=True)
 
 # Exibição dos DataFrames lado a lado
 col1, col2 = st.columns(2)
