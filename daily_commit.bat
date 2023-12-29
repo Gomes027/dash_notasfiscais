@@ -1,3 +1,4 @@
+cd Src\Notas_fiscais\Dashboard
 git add nfs_recebidas.xlsx
 git add recebimento_do_dia.xlsx
 git add recebimentos.py
