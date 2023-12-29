@@ -33,7 +33,7 @@ imagens_lojas = {
 }
 
 # Linha para adicionar título e imagem
-col_titulo, col_imagem = st.columns([8, 2])  # Ajuste as proporções conforme necessário
+col_titulo, col_imagem = st.columns([4, 2])  # Ajuste as proporções conforme necessário
 with col_titulo:
     st.title(f"RECEBIMENTO - {loja_selecionada}")
 with col_imagem:
@@ -53,6 +53,3 @@ with col2:
     st.subheader("ENTREGAS LIBERADAS")
     colunas_relatorio = ['FORNECEDOR', 'NÚMERO DA NF']
     st.dataframe(df_filtrado[colunas_relatorio], use_container_width=True, hide_index=True, height=700)
-
-sleep(60)
-st.rerun()
