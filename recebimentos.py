@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+from time import sleep
 
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Entregas Pendentes")
