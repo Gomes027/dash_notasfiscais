@@ -32,10 +32,10 @@ def concatenar_com_quebras_de_linha(lista_nfs, max_chars=40):
     return resultado
 
 # Agrupar por fornecedor e aplicar a função personalizada
-df_agrupado = df_recebimento.groupby('FORNECEDOR').agg({'NÚMERO DA NF': lambda x: concatenar_com_quebras_de_linha(x)}).reset_index()
+df_recebimento = df_recebimento.groupby('FORNECEDOR').agg({'NÚMERO DA NF': lambda x: concatenar_com_quebras_de_linha(x)}).reset_index()
 
 # Filtragem dos dados para a loja selecionada
-df_filtrado = df_agrupado[(df_recebimento['WMS'] == 'L') & (df_recebimento['Loja'] == loja_selecionada)].sort_values('FORNECEDOR')
+df_filtrado = df_recebimento[(df_recebimento['WMS'] == 'L') & (df_recebimento['Loja'] == loja_selecionada)].sort_values('FORNECEDOR')
 
 # Filtragem dos dados para a loja selecionada no df_nfs_recebidas
 df_nfs_recebidas_filtrado = df_nfs_recebidas[df_nfs_recebidas['Loja'] == loja_selecionada].sort_values('FORNECEDOR')
