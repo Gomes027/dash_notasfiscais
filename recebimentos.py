@@ -39,4 +39,4 @@ with col2:
     st.dataframe(df_filtrado[colunas_relatorio], use_container_width=True, hide_index=True, height=700)
 
 sleep(60)
-st.experimental_rerun()
+st.rerun()
