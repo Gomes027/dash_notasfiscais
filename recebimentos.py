@@ -33,7 +33,7 @@ imagens_lojas = {
 }
 
 # Linha para adicionar título e imagem
-col_titulo, col_imagem = st.columns([8, 2])  # Ajuste as proporções conforme necessário
+col_titulo, col_imagem = st.columns([8, 4])  # Ajuste as proporções conforme necessário
 with col_titulo:
     st.title(f"RECEBIMENTO - {loja_selecionada}")
 with col_imagem:
