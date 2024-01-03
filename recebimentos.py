@@ -47,7 +47,7 @@ df_agrupado = df_filtrado.groupby('FORNECEDOR').agg({'NÚMERO DA NF': lambda x: 
 df_nfs_recebidas_filtrado = df_nfs_recebidas[df_nfs_recebidas['Loja'] == loja_selecionada].sort_values('FORNECEDOR')
 
 # Exibindo a data da última atualização no Streamlit
-st.sidebar.markdown(f"Última atualização do arquivo: {ultima_atualizacao.strftime('%d/%m/%Y %H:%M:%S')}")
+st.sidebar.markdown(f"Última atualização: {ultima_atualizacao.strftime('%d/%m/%Y %H:%M:%S')}")
 
 # Dicionário mapeando lojas para suas respectivas imagens
 imagens_lojas = {
