@@ -7,17 +7,30 @@ from datetime import datetime
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 
-# Baixar e ler os arquivos Excel
-df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
-df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
-
 # Configuração do fuso horário
 fuso_horario = pytz.timezone('America/Sao_Paulo')
 
-# Obtendo a data da última atualização do arquivo
+# Função para obter a data da última atualização do arquivo
+def obter_data_ultima_atualizacao(caminho_arquivo):
+    timestamp = os.path.getmtime(caminho_arquivo)
+    return datetime.fromtimestamp(timestamp, fuso_horario)
+
 caminho_arquivo = r"recebimento_do_dia.xlsx"
-timestamp = os.path.getmtime(caminho_arquivo)
-ultima_atualizacao = datetime.fromtimestamp(timestamp, fuso_horario)
+
+# Verifica se a data da última atualização já está no session_state
+if 'ultima_atualizacao' not in st.session_state:
+    st.session_state.ultima_atualizacao = obter_data_ultima_atualizacao(caminho_arquivo)
+
+ultima_atualizacao_atual = obter_data_ultima_atualizacao(caminho_arquivo)
+
+# Se a data da última atualização for diferente da atual, atualiza e rerun o app
+if ultima_atualizacao_atual != st.session_state.ultima_atualizacao:
+    st.session_state.ultima_atualizacao = ultima_atualizacao_atual
+    st.rerun()
+
+# Baixar e ler os arquivos Excel
+df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
+df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
 
 # Processamento do DataFrame df_recebimento
 mapeamento_lojas = {1: 'SMJ', 2: 'STT', 3: 'VIX', 4: 'MCP'}
@@ -26,7 +39,7 @@ df_recebimento['Nota'] = df_recebimento['Nota'].apply(lambda x: f'{int(x):09d}' 
 df_recebimento = df_recebimento.rename(columns={'Fornecedor': 'FORNECEDOR', 'Nota': 'NÚMERO DA NF'})
 
 # Exibindo a data da última atualização no Streamlit
-st.sidebar.markdown(f"Última atualização: {ultima_atualizacao.strftime('%d/%m/%Y %H:%M:%S')}")
+st.sidebar.markdown(f"Última atualização: {ultima_atualizacao_atual.strftime('%d/%m/%Y %H:%M:%S')}")
 
 st.sidebar.markdown("---")  # Adiciona uma linha divisória
 
