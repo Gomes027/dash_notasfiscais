@@ -4,6 +4,8 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime
 
+print("teste")
+
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 
