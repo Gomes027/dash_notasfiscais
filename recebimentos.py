@@ -43,8 +43,16 @@ st.sidebar.markdown(f"Última atualização: {ultima_atualizacao_atual.strftime(
 
 st.sidebar.markdown("---")  # Adiciona uma linha divisória
 
+# Verifica se a loja já foi selecionada anteriormente e armazenada no session_state
+if 'loja_selecionada' not in st.session_state:
+    st.session_state.loja_selecionada = sorted(df_recebimento['Loja'].unique())[0]  # Valor padrão
+
 # Widget de seleção para escolher uma loja
-loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimento['Loja'].unique()))
+loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimento['Loja'].unique()), 
+                                        index=sorted(df_recebimento['Loja'].unique()).index(st.session_state.loja_selecionada))
+
+# Atualiza a loja selecionada no session_state
+st.session_state.loja_selecionada = loja_selecionada
 
 # Função para concatenar com quebras de linha
 def concatenar_com_quebras_de_linha(lista_nfs, max_chars=50):
