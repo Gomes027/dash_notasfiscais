@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import streamlit as st
 from time import sleep
@@ -8,6 +9,11 @@ st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 # Baixar e ler os arquivos Excel
 df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
 df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
+
+# Obtendo a data da última atualização do arquivo
+caminho_arquivo = r"recebimento_do_dia.xlsx"
+timestamp = os.path.getmtime(caminho_arquivo)
+ultima_atualizacao = pd.to_datetime(timestamp, unit='s')
 
 # Processamento do DataFrame df_recebimento
 mapeamento_lojas = {1: 'SMJ', 2: 'STT', 3: 'VIX', 4: 'MCP'}
@@ -39,6 +45,9 @@ df_agrupado = df_filtrado.groupby('FORNECEDOR').agg({'NÚMERO DA NF': lambda x: 
 
 # Filtragem dos dados para a loja selecionada no df_nfs_recebidas
 df_nfs_recebidas_filtrado = df_nfs_recebidas[df_nfs_recebidas['Loja'] == loja_selecionada].sort_values('FORNECEDOR')
+
+# Exibindo a data da última atualização no Streamlit
+st.sidebar.markdown(f"Última atualização do arquivo: {ultima_atualizacao.strftime('%d/%m/%Y %H:%M:%S')}")
 
 # Dicionário mapeando lojas para suas respectivas imagens
 imagens_lojas = {
