@@ -2,6 +2,7 @@ import os
 import pytz
 import pandas as pd
 import streamlit as st
+from time import sleep
 from datetime import datetime
 
 # Configuração da página
@@ -101,3 +102,5 @@ with col2:
                 for index, row in grupo.iterrows():
                     fornecedor, nfs = row
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
+
+st.rerun(); sleep(60)
