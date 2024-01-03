@@ -1,7 +1,7 @@
 import os
+import pytz
 import pandas as pd
 import streamlit as st
-from time import sleep
 from datetime import datetime
 
 # Configuração da página
