@@ -9,13 +9,9 @@ from datetime import datetime
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Recebimento")
 
-# Inicialize uma variável de sessão para armazenar o tempo da última execução
-if 'last_run_time' not in st.session_state:
-    st.session_state.last_run_time = time.time()
-
-# Adicionando um parâmetro de query fictício para forçar a recarga
-df_recebimento = pd.read_excel(f"recebimento_do_dia.xlsx?{time.time()}", engine='openpyxl')
-df_nfs_recebidas = pd.read_excel(f"nfs_recebidas.xlsx?{time.time()}", engine='openpyxl')
+# Baixar e ler os arquivos Excel
+df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
+df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
 
 # Configuração do fuso horário
 fuso_horario = pytz.timezone('America/Sao_Paulo')
