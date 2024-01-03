@@ -10,9 +10,9 @@ st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 # Configuração do fuso horário
 fuso_horario = pytz.timezone('America/Sao_Paulo')
 
-# Função callback para atualizar a loja selecionada no session_state
+# Função para atualizar a loja selecionada
 def atualizar_loja_selecionada():
-    st.session_state.loja_selecionada = st.session_state['selecao_loja']
+    st.session_state.loja_selecionada = loja_selecionada
 
 # Função para obter a data da última atualização do arquivo
 def obter_data_ultima_atualizacao(caminho_arquivo):
@@ -50,17 +50,17 @@ st.sidebar.markdown("---")  # Adiciona uma linha divisória
 # Lista de lojas para a seleção
 lista_lojas = sorted(df_recebimento['Loja'].unique())
 
-# Inicializar o valor da loja selecionada no session_state, se necessário
+# Verifica se a loja já foi selecionada anteriormente e armazenada no session_state
 if 'loja_selecionada' not in st.session_state:
     st.session_state.loja_selecionada = lista_lojas[0]  # Valor padrão
 
 # Widget de seleção para escolher uma loja
-# Use o valor armazenado em st.session_state como o valor padrão
 loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', lista_lojas, 
-                                        index=lista_lojas.index(st.session_state.loja_selecionada),
-                                        key='selecao_loja',
-                                        on_change=atualizar_loja_selecionada)
+                                        index=lista_lojas.index(st.session_state.loja_selecionada))
 
+# Atualiza a loja selecionada no session_state
+if loja_selecionada != st.session_state.loja_selecionada:
+    atualizar_loja_selecionada()
 
 # Função para concatenar com quebras de linha
 def concatenar_com_quebras_de_linha(lista_nfs, max_chars=50):
