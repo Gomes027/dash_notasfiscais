@@ -25,6 +25,9 @@ df_recebimento['Loja'] = df_recebimento['Loja'].replace(mapeamento_lojas)
 df_recebimento['Nota'] = df_recebimento['Nota'].apply(lambda x: f'{int(x):09d}' if pd.notnull(x) else '')
 df_recebimento = df_recebimento.rename(columns={'Fornecedor': 'FORNECEDOR', 'Nota': 'NÚMERO DA NF'})
 
+# Exibindo a data da última atualização no Streamlit
+st.sidebar.markdown(f"Última atualização: {ultima_atualizacao.strftime('%d/%m/%Y %H:%M:%S')}")
+
 # Widget de seleção para escolher uma loja
 loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimento['Loja'].unique()))
 
@@ -49,9 +52,6 @@ df_agrupado = df_filtrado.groupby('FORNECEDOR').agg({'NÚMERO DA NF': lambda x: 
 
 # Filtragem dos dados para a loja selecionada no df_nfs_recebidas
 df_nfs_recebidas_filtrado = df_nfs_recebidas[df_nfs_recebidas['Loja'] == loja_selecionada].sort_values('FORNECEDOR')
-
-# Exibindo a data da última atualização no Streamlit
-st.sidebar.markdown(f"Última atualização: {ultima_atualizacao.strftime('%d/%m/%Y %H:%M:%S')}")
 
 # Dicionário mapeando lojas para suas respectivas imagens
 imagens_lojas = {
