@@ -10,10 +10,6 @@ st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 # Configuração do fuso horário
 fuso_horario = pytz.timezone('America/Sao_Paulo')
 
-# Função para atualizar a loja selecionada
-def atualizar_loja_selecionada():
-    st.session_state.loja_selecionada = loja_selecionada
-
 # Função para obter a data da última atualização do arquivo
 def obter_data_ultima_atualizacao(caminho_arquivo):
     timestamp = os.path.getmtime(caminho_arquivo)
@@ -47,20 +43,8 @@ st.sidebar.markdown(f"Última atualização: {ultima_atualizacao_atual.strftime(
 
 st.sidebar.markdown("---")  # Adiciona uma linha divisória
 
-# Lista de lojas para a seleção
-lista_lojas = sorted(df_recebimento['Loja'].unique())
-
-# Verifica se a loja já foi selecionada anteriormente e armazenada no session_state
-if 'loja_selecionada' not in st.session_state:
-    st.session_state.loja_selecionada = lista_lojas[0]  # Valor padrão
-
 # Widget de seleção para escolher uma loja
-loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', lista_lojas, 
-                                        index=lista_lojas.index(st.session_state.loja_selecionada))
-
-# Atualiza a loja selecionada no session_state
-if loja_selecionada != st.session_state.loja_selecionada:
-    atualizar_loja_selecionada()
+loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimento['Loja'].unique()))
 
 # Função para concatenar com quebras de linha
 def concatenar_com_quebras_de_linha(lista_nfs, max_chars=50):
