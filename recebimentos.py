@@ -103,4 +103,4 @@ with col2:
                     fornecedor, nfs = row
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
 
-st.rerun(); sleep(60)
+sleep(60); st.rerun()
