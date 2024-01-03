@@ -6,7 +6,7 @@ from time import sleep
 from datetime import datetime
 
 # Configuração da página
-st.set_page_config(layout="wide", page_title="Recebimento")
+st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 
 # Baixar e ler os arquivos Excel
 df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
@@ -103,4 +103,4 @@ with col2:
                     fornecedor, nfs = row
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
 
-sleep(60); st.rerun()
+st.rerun(); sleep(60)
