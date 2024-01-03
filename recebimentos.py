@@ -1,12 +1,17 @@
 import os
 import pytz
+import time
 import pandas as pd
 import streamlit as st
 from time import sleep
 from datetime import datetime
 
 # Configuração da página
-st.set_page_config(layout="wide", page_title="Entregas Pendentes")
+st.set_page_config(layout="wide", page_title="Recebimento")
+
+# Inicialize uma variável de sessão para armazenar o tempo da última execução
+if 'last_run_time' not in st.session_state:
+    st.session_state.last_run_time = time.time()
 
 # Baixar e ler os arquivos Excel
 df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
