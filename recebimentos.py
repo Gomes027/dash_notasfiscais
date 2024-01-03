@@ -14,7 +14,7 @@ if 'last_run_time' not in st.session_state:
     st.session_state.last_run_time = time.time()
 
 # Baixar e ler os arquivos Excel
-df_recebimento = pd.read_excel(f"recebimento_do_dia.xlsx?{time.time()}", engine='openpyxl')
+df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
 df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
 
 # Configuração do fuso horário
