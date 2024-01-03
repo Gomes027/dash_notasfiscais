@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import streamlit as st
 from time import sleep
+from datetime import datetime
 
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Entregas Pendentes")
@@ -10,10 +11,13 @@ st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
 df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
 
+# Configuração do fuso horário
+fuso_horario = pytz.timezone('America/Sao_Paulo')
+
 # Obtendo a data da última atualização do arquivo
 caminho_arquivo = r"recebimento_do_dia.xlsx"
 timestamp = os.path.getmtime(caminho_arquivo)
-ultima_atualizacao = pd.to_datetime(timestamp, unit='s')
+ultima_atualizacao = datetime.fromtimestamp(timestamp, fuso_horario)
 
 # Processamento do DataFrame df_recebimento
 mapeamento_lojas = {1: 'SMJ', 2: 'STT', 3: 'VIX', 4: 'MCP'}
