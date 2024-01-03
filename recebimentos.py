@@ -103,9 +103,3 @@ with col2:
                 for index, row in grupo.iterrows():
                     fornecedor, nfs = row
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
-
-# No final do seu código, verifique se passou um minuto desde a última execução
-current_time = time.time()
-if current_time - st.session_state.last_run_time > 60:
-    st.session_state.last_run_time = current_time
-    st.rerun()
