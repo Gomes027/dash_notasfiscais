@@ -28,6 +28,8 @@ df_recebimento = df_recebimento.rename(columns={'Fornecedor': 'FORNECEDOR', 'Not
 # Exibindo a data da última atualização no Streamlit
 st.sidebar.markdown(f"Última atualização: {ultima_atualizacao.strftime('%d/%m/%Y %H:%M:%S')}")
 
+st.sidebar.markdown("---")  # Adiciona uma linha divisória
+
 # Widget de seleção para escolher uma loja
 loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimento['Loja'].unique()))
 
