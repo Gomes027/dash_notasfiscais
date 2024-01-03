@@ -102,5 +102,3 @@ with col2:
                 for index, row in grupo.iterrows():
                     fornecedor, nfs = row
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
-
-sleep(60); st.rerun()
