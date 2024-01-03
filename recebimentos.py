@@ -26,10 +26,17 @@ ultima_atualizacao_atual = obter_data_ultima_atualizacao(caminho_arquivo)
 # Se a data da última atualização for diferente da atual, atualiza e rerun o app
 if ultima_atualizacao_atual != st.session_state.ultima_atualizacao:
     st.session_state.ultima_atualizacao = ultima_atualizacao_atual
-    st.experimental_rerun()
+    st.rerun()
 
-# Restante do código...
-# ...
+# Baixar e ler os arquivos Excel
+df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
+df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
+
+# Processamento do DataFrame df_recebimento
+mapeamento_lojas = {1: 'SMJ', 2: 'STT', 3: 'VIX', 4: 'MCP'}
+df_recebimento['Loja'] = df_recebimento['Loja'].replace(mapeamento_lojas)
+df_recebimento['Nota'] = df_recebimento['Nota'].apply(lambda x: f'{int(x):09d}' if pd.notnull(x) else '')
+df_recebimento = df_recebimento.rename(columns={'Fornecedor': 'FORNECEDOR', 'Nota': 'NÚMERO DA NF'})
 
 # Exibindo a data da última atualização no Streamlit
 st.sidebar.markdown(f"Última atualização: {ultima_atualizacao_atual.strftime('%d/%m/%Y %H:%M:%S')}")
