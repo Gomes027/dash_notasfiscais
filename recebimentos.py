@@ -18,6 +18,9 @@ df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
 # Configuração do fuso horário
 fuso_horario = pytz.timezone('America/Sao_Paulo')
 
+timestamp = st.empty()
+ultima_atualizacao = st.empty()
+
 # Obtendo a data da última atualização do arquivo
 caminho_arquivo = r"recebimento_do_dia.xlsx"
 timestamp = os.path.getmtime(caminho_arquivo)
