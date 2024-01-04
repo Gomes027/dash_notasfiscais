@@ -103,6 +103,9 @@ with col2:
                     fornecedor, nfs = row
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
 
+df_nfs_recebidas_filtrado = st.empty()
+fornecedor = st.empty()
+
 sleep(30)
 st.rerun()
 sleep(30)
