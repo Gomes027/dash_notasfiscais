@@ -8,19 +8,12 @@ from datetime import datetime
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 
-df_recebimento = st.empty()
-df_nfs_recebidas = st.empty()
-
 # Baixar e ler os arquivos Excel
 df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
 df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
 
 # Configuração do fuso horário
 fuso_horario = pytz.timezone('America/Sao_Paulo')
-
-caminho_arquivo = st.empty()
-timestamp = st.empty()
-ultima_atualizacao = st.empty()
 
 # Obtendo a data da última atualização do arquivo
 caminho_arquivo = r"recebimento_do_dia.xlsx"
