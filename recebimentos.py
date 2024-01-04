@@ -8,6 +8,9 @@ from datetime import datetime
 # Configuração da página
 st.set_page_config(layout="wide", page_title="Entregas Pendentes")
 
+df_recebimento = st.empty()
+df_nfs_recebidas = st.empty()
+
 # Baixar e ler os arquivos Excel
 df_recebimento = pd.read_excel(r"recebimento_do_dia.xlsx", engine='openpyxl')
 df_nfs_recebidas = pd.read_excel(r"nfs_recebidas.xlsx", engine='openpyxl')
@@ -102,7 +105,3 @@ with col2:
                 for index, row in grupo.iterrows():
                     fornecedor, nfs = row
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
-
-sleep(60)
-st.clear.cache()
-st.rerun()
