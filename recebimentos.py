@@ -103,5 +103,22 @@ with col2:
                     fornecedor, nfs = row
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
 
-st.rerun()
-sleep(30)
+# Verifique se a variável de estado 'rerun_toggle' existe, senão, crie e defina como False
+if 'rerun_toggle' not in st.session_state:
+    st.session_state['rerun_toggle'] = False
+
+# Restante do seu código...
+
+# No final do seu script, verifique o estado de 'rerun_toggle'
+if st.session_state['rerun_toggle']:
+    # Alterne o estado de 'rerun_toggle'
+    st.session_state['rerun_toggle'] = False
+    
+    # Coloque um pequeno atraso se necessário
+    sleep(30)  # Ajuste o tempo conforme necessário
+
+    # Execute rerun
+    st.rerun()
+else:
+    # Simplesmente alterne o estado de 'rerun_toggle' sem rerun
+    st.session_state['rerun_toggle'] = True
