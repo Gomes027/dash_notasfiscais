@@ -30,21 +30,8 @@ st.sidebar.markdown(f"Última atualização: {ultima_atualizacao.strftime('%d/%m
 
 st.sidebar.markdown("---")  # Adiciona uma linha divisória
 
-chave_loja_selecionada = 'loja_selecionada'
-
-# Inicialize o estado da sessão para a loja selecionada se ele ainda não existir
-if chave_loja_selecionada not in st.session_state:
-    st.session_state[chave_loja_selecionada] = 'SMJ'  # ou qualquer valor padrão que você deseje
-
-# Crie o widget de seleção e use o valor atual do estado da sessão como o valor padrão
-loja_selecionada = st.sidebar.selectbox(
-    'Escolha uma Loja:',
-    options=sorted(df_recebimento['Loja'].unique()),
-    index=sorted(df_recebimento['Loja'].unique()).index(st.session_state[chave_loja_selecionada])
-)
-
-# Atualize o estado da sessão sempre que houver uma nova seleção
-st.session_state[chave_loja_selecionada] = loja_selecionada
+# Widget de seleção para escolher uma loja
+loja_selecionada = st.sidebar.selectbox('Escolha uma Loja:', sorted(df_recebimento['Loja'].unique()))
 
 # Função para concatenar com quebras de linha
 def concatenar_com_quebras_de_linha(lista_nfs, max_chars=50):
