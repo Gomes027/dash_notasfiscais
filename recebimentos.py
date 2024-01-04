@@ -107,8 +107,6 @@ with col2:
 if 'rerun_toggle' not in st.session_state:
     st.session_state['rerun_toggle'] = False
 
-# Restante do seu código...
-
 # No final do seu script, verifique o estado de 'rerun_toggle'
 if st.session_state['rerun_toggle']:
     # Alterne o estado de 'rerun_toggle'
