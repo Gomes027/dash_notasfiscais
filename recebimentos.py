@@ -103,5 +103,6 @@ with col2:
                     fornecedor, nfs = row
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
 
-sleep(60)
+sleep(30)
 st.rerun()
+sleep(30)
