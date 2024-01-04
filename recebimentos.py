@@ -2,6 +2,7 @@ import os
 import pytz
 import pandas as pd
 import streamlit as st
+from time import sleep
 from datetime import datetime
 
 # Configuração da página
@@ -103,5 +104,5 @@ with col2:
                     st.markdown(f"**{fornecedor}:**<br>{nfs}", unsafe_allow_html=True)
 
 sleep(60)
-st.legacy_caching.clear_cache()
+st.clear.cache()
 st.rerun()
